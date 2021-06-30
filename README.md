@@ -1,3 +1,6 @@
-# data_analysis
-# This is my related repo for datanalysis period of my Clarusway IT school bootcamp.
-# Assignments and some projects will be sores in this repo for 3 months to come. 
+Data Science Portfolio
+
+Repository containing portfolio of data science projects completed by me for academic, self learning, and hobby purposes. Presented in the form of .ipynb and .py Notebooks.
+
+Contents
+
