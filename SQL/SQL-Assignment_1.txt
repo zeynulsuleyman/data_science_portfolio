@@ -1,0 +1,60 @@
+-- Assignment - 1: 
+
+-- Create a table and insert values,
+
+-- Sum amounts for each sender (debits) and receiver (credits),
+
+-- Full (outer) join debits and credits tables on user id, taking net change as the difference between credits and debits, coercing nulls to zeros with coalesce()
+
+
+
+
+
+
+
+-- First and foremost, let's create our tables. "transactions" table has been created.
+
+CREATE TABLE transactions (
+	sender INT, 
+	receiver INT, 
+	amount INT, 
+	transaction_date DATE
+	);
+
+-- Now, let's populate our newly-created "transactions" table.
+
+SELECT * 
+FROM transactions
+INSERT INTO transactions (sender, receiver, amount, transaction_date)
+VALUES 
+		(5, 2, 10, '2-12-20'),
+		(1, 3, 15, '2-13-20'),
+		(2, 1, 20, '2-13-20'),
+		(2, 3, 25, '2-14-20'),
+		(3, 1, 20, '2-15-20'),
+		(3, 2, 15, '2-15-20'),
+		(1, 4, 5, '2-16-20')
+;
+
+-- This time, let's create "debits" and "credits" tables to make "Net_Change" calculation doable.
+
+SELECT sender, sum(amount) as debited
+INTO debits
+FROM transactions
+GROUP BY sender;
+
+----
+
+SELECT receiver, sum(amount) credited
+INTO credits
+FROM transactions
+GROUP BY receiver;
+
+-- And last but not least, let's generate the desired output.
+
+SELECT coalesce(sender, receiver) AS "user", 
+coalesce(credited, 0) - coalesce(debited, 0) AS net_change 
+FROM debits d
+FULL JOIN credits c
+ON d.sender = c.receiver
+ORDER BY 2 DESC;
